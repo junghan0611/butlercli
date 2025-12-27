@@ -182,3 +182,33 @@ target/
 3. **스크립트 개발**: 삼성 사용자가 재사용 가능하도록 범용적으로 작성
 4. **문서화**: README.md는 다른 가족도 사용 가능하도록 상세히 작성
 5. **Git 커밋**: 프로젝트 스타일 준수 (기존 커밋 히스토리 확인)
+
+**중요**: "Generated with Claude" 또는 "Co-Authored-By" 제외! (깔끔한 커밋 로그 유지)
+
+## 이슈 트래킹: bd (beads)
+
+**중요**: 이 프로젝트는 **bd (beads)** 로 모든 이슈를 관리합니다.
+
+### 필수 명령어
+
+```bash
+# 작업 찾기
+bd ready --json              # 블로커 없는 작업 가능 이슈
+bd list --json               # 전체 이슈 목록
+bd show <id>                 # 상세 보기
+
+# 이슈 생성
+bd create "제목" -t bug|feature|task -p 0-4 --json
+
+# 작업 시작/완료
+bd update <id> --status in_progress --json
+bd close <id> --reason "완료" --json
+```
+
+### 규칙
+
+- 모든 작업은 bd 이슈로 관리
+- 항상 `--json` 플래그 사용
+- `.beads/issues.jsonl` 파일은 코드와 함께 커밋
+
+
