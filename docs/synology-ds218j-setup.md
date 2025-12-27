@@ -50,7 +50,7 @@ NAS Root
 
 | 소스 | 경로 | 용량 | 설명 |
 |------|------|------|------|
-| USB HDD | `/media/goqual/T7 Shield/family-photos` | ~50GB | SmartSwitch + Google Photos 정리 완료 |
+| USB HDD | `/media/[USER]/[USB_DRIVE]/family-photos` | ~50GB | SmartSwitch + Google Photos 정리 완료 |
 
 ### 이관 방법
 
@@ -59,7 +59,7 @@ NAS Root
 가장 간단하고 확실한 방법:
 
 1. **Nautilus** (파일 관리자) 열기
-2. **Ctrl+L** → 주소 입력: `smb://192.168.45.245/family-photos`
+2. **Ctrl+L** → 주소 입력: `smb://[NAS_IP]/family-photos`
 3. 사용자/비밀번호 입력
 4. USB HDD 폴더에서 NAS 폴더로 **드래그 앤 드롭**
 
@@ -79,7 +79,7 @@ sudo mkdir -p /mnt/nas
 sudo mount -t cifs //NAS_IP/family-photos /mnt/nas -o username=admin,vers=3.0
 
 # rsync로 복사 (진행률 표시)
-rsync -avh --progress "/media/goqual/T7 Shield/family-photos/" /mnt/nas/
+rsync -avh --progress "/media/[USER]/[USB_DRIVE]/family-photos/" /mnt/nas/
 
 # 완료 후 언마운트
 sudo umount /mnt/nas
@@ -94,17 +94,17 @@ sudo umount /mnt/nas
 
 ### 2. SSH rsync 인증 실패
 ```bash
-rsync -avh --progress "/media/goqual/T7 Shield/family-photos/" baron@192.168.45.245:/volume1/family-photos/
+rsync -avh --progress "/path/to/source/" user@[NAS_IP]:/volume1/family-photos/
 # → Permission denied, please try again.
 ```
 - **문제**: SSH 비밀번호 인증 시 Permission denied
 - **시도**: sshpass 사용 → 동일 오류
-- **원인**: 비밀번호 특수문자(`!`) 이스케이프 문제 또는 SSH 설정 문제
+- **원인**: 비밀번호 특수문자 이스케이프 문제 또는 SSH 설정 문제
 - **해결**: SMB 방식으로 전환
 
 ### 3. SMB 마운트 권한 문제
 ```bash
-sudo mount -t cifs //192.168.45.245/family-photos /mnt/nas -o username=baron,vers=3.0
+sudo mount -t cifs //[NAS_IP]/family-photos /mnt/nas -o username=[USER],vers=3.0
 # rsync 시 Permission denied (mkdir, mkstemp 실패)
 ```
 - **문제**: 마운트는 되지만 파일/폴더 생성 권한 없음

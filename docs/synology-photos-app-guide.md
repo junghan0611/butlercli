@@ -53,7 +53,7 @@ NAS에서 다음 설정이 완료되어야 합니다:
 
 1. 앱 열기
 2. 로그인 방법 선택:
-   - **같은 Wi-Fi**: NAS IP 주소 입력 (예: `192.168.45.245`)
+   - **같은 Wi-Fi**: NAS IP 주소 입력 (예: `192.168.x.x`)
    - **외부 접속**: QuickConnect ID 입력
 
 3. 로그인 정보 입력:
@@ -117,7 +117,7 @@ NAS에서 다음 설정이 완료되어야 합니다:
 ### 로그인이 안 돼요
 
 1. **같은 Wi-Fi**에 연결되어 있는지 확인
-2. NAS IP 주소가 맞는지 확인 (예: `192.168.45.245`)
+2. NAS IP 주소가 맞는지 확인 (예: `192.168.x.x`)
 3. 사용자 이름/비밀번호 확인
 
 ### 백업이 멈췄어요
@@ -159,10 +159,19 @@ https://quickconnect.to/[QuickConnect ID]
 
 | 항목 | 값 | 사용 시점 |
 |------|-----|----------|
-| NAS IP | `192.168.45.245` | 집 Wi-Fi에서 |
-| 웹 (집) | `https://192.168.45.245:5001` | 집에서 PC로 |
-| QuickConnect ID | `junghanacs` | **외부에서** |
-| 웹 (외부) | `https://quickconnect.to/junghanacs` | 외부에서 PC로 |
+| NAS IP | `[NAS_IP]` | 집 Wi-Fi에서 |
+| 웹 (집) | `https://[NAS_IP]:5001` | 집에서 PC로 |
+| QuickConnect ID | `[QUICKCONNECT_ID]` | **외부에서** |
+| 웹 (외부) | `https://quickconnect.to/[QUICKCONNECT_ID]` | 외부에서 PC로 |
+
+### 계정 정보
+
+| 사용자 | 계정명 | Photos 경로 |
+|--------|--------|-------------|
+| 관리자 | `[ADMIN]` | `/volume1/homes/[ADMIN]/Photos` |
+| 가족 | `[FAMILY]` | `/volume1/homes/[FAMILY]/Photos` |
+
+> **참고**: 실제 값은 `~/org/family/` 프라이빗 저장소에서 관리
 
 > **팁**: 앱 설정 시 QuickConnect ID로 로그인하면 집/외부 상관없이 자동 연결됨
 
