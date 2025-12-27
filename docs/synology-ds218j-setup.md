@@ -54,13 +54,24 @@ NAS Root
 
 ### 이관 방법
 
-#### 방법 A: USB 직접 연결 (권장)
+#### 방법 A: Nautilus SMB 접근 (권장, 실제 사용)
+
+가장 간단하고 확실한 방법:
+
+1. **Nautilus** (파일 관리자) 열기
+2. **Ctrl+L** → 주소 입력: `smb://192.168.45.245/family-photos`
+3. 사용자/비밀번호 입력
+4. USB HDD 폴더에서 NAS 폴더로 **드래그 앤 드롭**
+
+#### 방법 B: USB 직접 연결
 
 1. USB HDD를 DS218J USB 3.0 포트에 연결
 2. **File Station** → 외부 장치 확인
 3. `family-photos` 폴더 전체를 NAS `family-photos` 공유 폴더로 복사
 
-#### 방법 B: 네트워크 복사 (Linux)
+> **주의**: exFAT 포맷 USB는 **exFAT Access 패키지** (유료, ~$4) 필요
+
+#### 방법 C: 터미널 SMB 마운트 + rsync
 
 ```bash
 # NAS 마운트
@@ -73,6 +84,39 @@ rsync -avh --progress "/media/goqual/T7 Shield/family-photos/" /mnt/nas/
 # 완료 후 언마운트
 sudo umount /mnt/nas
 ```
+
+## 시행착오 기록 (Troubleshooting)
+
+### 1. USB 직접 연결 실패
+- **문제**: Samsung T7 Shield (exFAT 포맷) NAS에서 인식 안 됨
+- **원인**: DS218J는 exFAT 기본 미지원
+- **해결**: exFAT Access 패키지 필요 (유료) → 네트워크 복사로 전환
+
+### 2. SSH rsync 인증 실패
+```bash
+rsync -avh --progress "/media/goqual/T7 Shield/family-photos/" baron@192.168.45.245:/volume1/family-photos/
+# → Permission denied, please try again.
+```
+- **문제**: SSH 비밀번호 인증 시 Permission denied
+- **시도**: sshpass 사용 → 동일 오류
+- **원인**: 비밀번호 특수문자(`!`) 이스케이프 문제 또는 SSH 설정 문제
+- **해결**: SMB 방식으로 전환
+
+### 3. SMB 마운트 권한 문제
+```bash
+sudo mount -t cifs //192.168.45.245/family-photos /mnt/nas -o username=baron,vers=3.0
+# rsync 시 Permission denied (mkdir, mkstemp 실패)
+```
+- **문제**: 마운트는 되지만 파일/폴더 생성 권한 없음
+- **시도**: `uid`, `gid`, `file_mode`, `dir_mode` 옵션 추가 → mount 자체 실패
+- **원인**: 시놀로지 SMB 권한 설정과 Linux 마운트 옵션 충돌
+- **해결**: Nautilus GUI로 SMB 접근 (자동 권한 처리)
+
+### 4. 최종 해결책
+**Nautilus SMB 접근**이 가장 안정적:
+- GUI에서 인증 처리 자동화
+- 권한 문제 없이 드래그 앤 드롭 복사
+- 진행률 표시 지원
 
 ## 운영 정책
 
