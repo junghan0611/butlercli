@@ -29,6 +29,15 @@ SM-XXXXX_deviceid/
 
 ## 설치
 
+### NixOS/Nix 사용자 (권장)
+
+```bash
+# nix-shell 진입 (모든 의존성 자동 설치)
+nix-shell
+```
+
+### 일반 Python 환경
+
 ```bash
 # Python 가상환경 생성
 python3 -m venv venv
