@@ -1,5 +1,5 @@
-# Family Config - Template Repository
-# 실제 가족 데이터는 ~/org/family/에 별도 관리
+# butlercli — CLI-first home operations agent (agent skill)
+# 실제 가족 데이터는 ~/org/family/ 에 별도 관리
 
 # Claude Code 로컬 설정
 .claude/
